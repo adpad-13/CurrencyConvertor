@@ -34,6 +34,12 @@ const loadCountries = async () => {
   return allCountries;
 };
 
+const updateFlags = () => {
+  if (fromFlag) fromFlag.src = flagUrl[fromCurrency.value] || "";
+  if (toFlag) toFlag.src = flagUrl[toCurrency.value] || "";
+};
+
+
 const convertCurrency = async () => {
   
   const amt = Number(inputAmt.value || inputAmt.placeholder);
