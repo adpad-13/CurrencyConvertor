@@ -34,6 +34,30 @@ const loadCountries = async () => {
   return allCountries;
 };
 
+const addDropdown = (countries)=>{
+  const options  = {}
+  countries.map(({flag,names,currencies})=>{
+    currencies?.map((c)=>{
+      const isMain = c.name.includes(names?.common || "");
+
+      if(!options[c.code]||isMain){
+        options[c.code] = `${c.code} - ${c.name}`;
+        flagUrl[c.code] = flag?.url_svg || "";
+      }
+    })
+  })
+
+  Object.keys(options).sort().map((code)=>{
+    fromCurrency.add(new Option(options[code],code));
+    toCurrency.add(new Option(options[code],code));
+  })
+
+  fromCurrency.value = "USD"
+  toCurrency.value = "INR"
+  updateFlags();
+}
+
+
 const updateFlags = () => {
   if (fromFlag) fromFlag.src = flagUrl[fromCurrency.value] || "";
   if (toFlag) toFlag.src = flagUrl[toCurrency.value] || "";
@@ -56,14 +80,13 @@ const convertCurrency = async () => {
   result.innerText = `${amt} ${from} = ${total} ${to}`;
 };
 
-
 fromCurrency.addEventListener("change", updateFlags);
 toCurrency.addEventListener("change", updateFlags);
 convertBtn.addEventListener("click", convertCurrency);
 
-
 const run = async ()=> {
   const countries = await loadCountries();
+  addDropdown(countries)
 }
 
 run()

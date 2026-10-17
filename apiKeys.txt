@@ -1,0 +1,3 @@
+rest_countries_api = rc_live_b0cf1ea2c9e9488a95c4e1ec47632267
+
+exchange_rate_api =  74df2cbfe4d90f1937a33e19
