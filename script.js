@@ -69,6 +69,10 @@ const convertCurrency = async () => {
   const amt = Number(inputAmt.value || inputAmt.placeholder);
   const from = fromCurrency.value;
   const to = toCurrency.value;
+  if(amt <0){
+    result.innerText = "Please enter a valid amount";
+    return;
+  }
 
   result.innerText = "Converting...";
 
@@ -83,6 +87,12 @@ const convertCurrency = async () => {
 fromCurrency.addEventListener("change", updateFlags);
 toCurrency.addEventListener("change", updateFlags);
 convertBtn.addEventListener("click", convertCurrency);
+
+inputAmt.addEventListener("keydown",(e)=>{
+  if(e.key=="Enter"){
+    convertCurrency();
+  }
+})
 
 const run = async ()=> {
   const countries = await loadCountries();
